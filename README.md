@@ -9,5 +9,6 @@ This repository contains compiled installers and machine-readable update metadat
 - `elan-chat-latest` — ELAN Chat for Windows
 - `xtrf-tools-latest` — XTRF Tools
 - `xtrf-for-windows-latest` — XTRF for Windows
+- `swornfinder-latest`: SwornFinder
 
 Applications may require an authorized ELAN Languages account.
