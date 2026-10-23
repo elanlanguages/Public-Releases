@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Applications ELAN Languages</title>
+  <meta name="description" content="Téléchargez la dernière version des applications Windows d'ELAN Languages.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%232563eb'/><path d='M16 7v13m0 0-5-5m5 5 5-5M9 25h14' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+  <style>
+    :root {
+      --bg: #f6f7f9; --card: #ffffff; --text: #111827; --muted: #6b7280; --border: #e5e7eb;
+      --accent: #2563eb; --accent-text: #ffffff; --soft: #f3f4f6;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f1115; --card: #181b21; --text: #f3f4f6; --muted: #9ca3af; --border: #2a2f38;
+        --accent: #3b82f6; --soft: #22262e;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+    .wrap { max-width: 920px; margin: 0 auto; padding: 56px 16px 40px; }
+    header { margin-bottom: 36px; }
+    .brand { font-size: 14px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.15; margin: 8px 0 12px; }
+    header p { color: var(--muted); margin: 0; max-width: 60ch; }
+
+    .grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 400px), 1fr)); }
+    .card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px;
+      display: flex; flex-direction: column; gap: 16px; transition: box-shadow .2s, border-color .2s;
+    }
+    .card:target { border-color: var(--app); box-shadow: 0 0 0 3px color-mix(in srgb, var(--app) 25%, transparent); }
+    .top { display: flex; gap: 14px; align-items: center; }
+    .logo {
+      width: 52px; height: 52px; border-radius: 14px; flex: none; display: grid; place-items: center;
+      background: var(--app); color: #fff; font-weight: 700; font-size: 20px;
+    }
+    .card h2 { font-size: 20px; margin: 0; }
+    .meta { color: var(--muted); font-size: 14px; }
+    .version {
+      display: inline-block; font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 999px;
+      background: color-mix(in srgb, var(--app) 14%, transparent); color: var(--app); margin-left: 6px; vertical-align: 2px;
+    }
+    .desc { margin: 0; }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: auto; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px; border-radius: 10px; padding: 10px 16px;
+      font: inherit; font-weight: 600; font-size: 15px; text-decoration: none; cursor: pointer; border: 1px solid transparent;
+    }
+    .btn-primary { background: var(--app); color: #fff; }
+    .btn-primary:hover { filter: brightness(1.08); }
+    .btn-ghost { background: var(--soft); color: var(--text); border-color: var(--border); }
+    .btn-ghost:hover { border-color: var(--muted); }
+    .btn svg { width: 18px; height: 18px; }
+    .size { font-weight: 400; opacity: .85; font-size: 13px; }
+
+    details { border-top: 1px solid var(--border); padding-top: 12px; font-size: 14px; }
+    summary { cursor: pointer; color: var(--muted); font-weight: 500; }
+    .notes { margin-top: 10px; }
+    .notes ul { padding-left: 20px; margin: 6px 0; }
+    .notes p { margin: 6px 0; }
+    .notes a, .notes-link { color: var(--accent); }
+
+    .skeleton { color: var(--muted); }
+    .error { color: var(--muted); font-size: 14px; }
+    footer { margin-top: 48px; color: var(--muted); font-size: 13px; text-align: center; }
+    footer a { color: inherit; }
+
+    .toast {
+      position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); opacity: 0;
+      background: var(--text); color: var(--bg); padding: 10px 16px; border-radius: 10px; font-size: 14px;
+      transition: opacity .2s, transform .2s; pointer-events: none;
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">ELAN Languages</div>
+      <h1>Applications Windows</h1>
+      <p>Téléchargez la dernière version de nos applications. Une fois installées, elles se mettent à jour automatiquement.</p>
+    </header>
+
+    <main class="grid" id="apps"><p class="skeleton">Chargement des applications…</p></main>
+
+    <footer>
+      Certaines applications nécessitent un compte ELAN Languages autorisé.<br>
+      <a href="https://github.com/elanlanguages/Public-Releases/releases">Toutes les versions sur GitHub</a>
+    </footer>
+  </div>
+  <div class="toast" id="toast">Lien copié</div>
+
+  <script src="apps.js"></script>
+  <script>
+    const ICON_DOWNLOAD = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>';
+    const ICON_LINK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>';
+
+    const escapeHtml = (s) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+    // Mini-convertisseur Markdown pour les notes de version (listes, gras, liens, code).
+    function renderMarkdown(md) {
+      const inline = (s) => escapeHtml(s)
+        .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+        .replace(/`(.+?)`/g, "<code>$1</code>")
+        .replace(/\[(.+?)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2">$1</a>');
+      let html = "", inList = false;
+      for (const raw of md.split(/\r?\n/)) {
+        const line = raw.trim();
+        const item = line.match(/^[-*]\s+(.*)/);
+        if (item) {
+          if (!inList) { html += "<ul>"; inList = true; }
+          html += `<li>${inline(item[1])}</li>`;
+          continue;
+        }
+        if (inList) { html += "</ul>"; inList = false; }
+        if (line) html += `<p>${inline(line.replace(/^#+\s*/, ""))}</p>`;
+      }
+      return html + (inList ? "</ul>" : "");
+    }
+
+    const formatSize = (b) => `${Math.round(b / 1048576)} Mo`;
+    const formatDate = (d) => new Date(d).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+    const permalink = (app) => new URL(`download.html?app=${app.id}`, location.href).href;
+
+    function card(app, info) {
+      const el = document.createElement("article");
+      el.className = "card";
+      el.id = app.id;
+      el.style.setProperty("--app", app.color);
+      const initials = app.name.split(/\s+/).filter((w) => /^[A-Z]/.test(w)).map((w) => w[0]).join("").slice(0, 2);
+      el.innerHTML = `
+        <div class="top">
+          <div class="logo" aria-hidden="true">${initials}</div>
+          <div>
+            <h2>${escapeHtml(app.name)}<span class="version">v${info.version}</span></h2>
+            <div class="meta">Windows · mis à jour le ${formatDate(info.date)}</div>
+          </div>
+        </div>
+        <p class="desc">${escapeHtml(app.description)}</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="${info.url}">${ICON_DOWNLOAD} Télécharger <span class="size">${formatSize(info.size)}</span></a>
+          <button class="btn btn-ghost" type="button" data-copy="${permalink(app)}">${ICON_LINK} Copier le lien</button>
+        </div>
+        ${info.notes ? `
+        <details>
+          <summary>Nouveautés de la version ${info.version}</summary>
+          <div class="notes">${renderMarkdown(info.notes)}</div>
+        </details>` : ""}`;
+      return el;
+    }
+
+    function showToast(text) {
+      const t = document.getElementById("toast");
+      t.textContent = text;
+      t.classList.add("show");
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => t.classList.remove("show"), 1800);
+    }
+
+    document.addEventListener("click", async (e) => {
+      const btn = e.target.closest("[data-copy]");
+      if (!btn) return;
+      try {
+        await navigator.clipboard.writeText(btn.dataset.copy);
+        showToast("Lien de téléchargement copié — il pointera toujours vers la dernière version");
+      } catch {
+        prompt("Copiez ce lien :", btn.dataset.copy);
+      }
+    });
+
+    (async () => {
+      const container = document.getElementById("apps");
+      try {
+        const releases = await fetchReleases();
+        container.innerHTML = "";
+        for (const app of APPS) {
+          const info = resolveApp(app, releases);
+          if (info) container.appendChild(card(app, info));
+        }
+        if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView({ block: "center" });
+      } catch {
+        container.innerHTML = `<p class="error">Impossible de charger la liste des applications pour le moment.
+          <a class="notes-link" href="https://github.com/${REPO}/releases">Voir les téléchargements sur GitHub</a>.</p>`;
+      }
+    })();
+  </script>
+</body>
+</html>

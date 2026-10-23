@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Téléchargement…</title>
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background: #f6f7f9; color: #1f2937;
+           display: grid; place-items: center; min-height: 100vh; margin: 0; padding: 16px; text-align: center; }
+    a { color: #2563eb; }
+  </style>
+</head>
+<body>
+  <p id="msg">Préparation du téléchargement…</p>
+  <script src="apps.js"></script>
+  <script>
+    // Lien permanent : download.html?app=<id> redirige vers le dernier installateur.
+    (async () => {
+      const msg = document.getElementById("msg");
+      const id = new URLSearchParams(location.search).get("app");
+      const app = APPS.find((a) => a.id === id);
+      if (!app) {
+        msg.innerHTML = 'Application inconnue. <a href="./">Voir toutes les applications</a>';
+        return;
+      }
+      try {
+        const info = resolveApp(app, await fetchReleases());
+        if (!info) throw new Error("introuvable");
+        msg.innerHTML = `Téléchargement de ${app.name} ${info.version}… ` +
+          `<br><br>Si rien ne se passe, <a href="${info.url}">cliquez ici</a>.`;
+        location.replace(info.url);
+      } catch {
+        msg.innerHTML = `Impossible de trouver la dernière version de ${app.name}.` +
+          `<br><br><a href="${RELEASE_PAGE(app.channel)}">Ouvrir la page de téléchargement sur GitHub</a>`;
+      }
+    })();
+  </script>
+</body>
+</html>
