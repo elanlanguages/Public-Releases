@@ -1,12 +1,14 @@
 // Applications shown on the site.
 // - channel: tag of the update-channel release (always current)
 // - notesTag: tag of the versioned release, used for the release notes
+// - icon: 128px PNG in docs/icons (falls back to initials)
 // When editing this file, bump ?v= in index.html and download.html so browsers drop the cached copy.
 const REPO = "elanlanguages/Public-Releases";
 
 const APPS = [
   {
     id: "elan-chat",
+    icon: "icons/elan-chat.png",
     name: "ELAN Chat",
     description: "The ELAN Chat desktop app for Windows.",
     channel: "elan-chat-latest",
@@ -15,6 +17,7 @@ const APPS = [
   },
   {
     id: "xtrf-for-windows",
+    icon: "icons/xtrf-for-windows.png",
     name: "XTRF for Windows",
     description: "XTRF in a dedicated Windows app.",
     channel: "xtrf-for-windows-latest",
@@ -23,6 +26,7 @@ const APPS = [
   },
   {
     id: "swornfinder",
+    icon: "icons/swornfinder.png",
     name: "SwornFinder",
     description: "Find sworn translators and interpreters.",
     channel: "swornfinder-latest",
@@ -35,6 +39,7 @@ const APPS = [
 const EXTENSIONS = [
   {
     id: "xtrf-tools",
+    icon: "icons/xtrf-tools.png",
     name: "XTRF Tools",
     description: "Browser extension that enhances XTRF for ELAN Languages employees.",
     color: "#ea580c",

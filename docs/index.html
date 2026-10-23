@@ -35,12 +35,15 @@
       background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px;
       display: flex; flex-direction: column; gap: 16px; transition: box-shadow .2s, border-color .2s;
     }
+    #extensions .card { grid-column: 1 / -1; }
     .card:target { border-color: var(--app); box-shadow: 0 0 0 3px color-mix(in srgb, var(--app) 25%, transparent); }
     .top { display: flex; gap: 14px; align-items: center; }
     .logo {
       width: 52px; height: 52px; border-radius: 14px; flex: none; display: grid; place-items: center;
       background: var(--app); color: #fff; font-weight: 700; font-size: 20px;
     }
+    .logo:has(img) { background: none; }
+    .logo img { width: 100%; height: 100%; object-fit: contain; }
     .card h2 { font-size: 20px; margin: 0; }
     .meta { color: var(--muted); font-size: 14px; }
     .version {
@@ -99,7 +102,7 @@
   </div>
   <div class="toast" id="toast">Link copied</div>
 
-  <script src="apps.js?v=2"></script>
+  <script src="apps.js?v=3"></script>
   <script>
     const ICON_DOWNLOAD = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>';
     const ICON_LINK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>';
@@ -131,6 +134,7 @@
     const formatDate = (d) => new Date(d).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
     const permalink = (app) => new URL(`download.html?app=${app.id}`, location.href).href;
 
+    const logo = (item) => `<div class="logo" aria-hidden="true">${item.icon ? `<img src="${item.icon}" alt="">` : initials(item.name)}</div>`;
     const initials = (name) => name.split(/\s+/).filter((w) => /^[A-Z]/.test(w)).map((w) => w[0]).join("").slice(0, 2);
 
     function newCard(item) {
@@ -145,7 +149,7 @@
       const el = newCard(app);
       el.innerHTML = `
         <div class="top">
-          <div class="logo" aria-hidden="true">${initials(app.name)}</div>
+          ${logo(app)}
           <div>
             <h2>${escapeHtml(app.name)}<span class="version">v${info.version}</span></h2>
             <div class="meta">Windows · updated ${formatDate(info.date)}</div>
@@ -168,7 +172,7 @@
       const el = newCard(ext);
       el.innerHTML = `
         <div class="top">
-          <div class="logo" aria-hidden="true">${initials(ext.name)}</div>
+          ${logo(ext)}
           <div>
             <h2>${escapeHtml(ext.name)}</h2>
             <div class="meta">${ext.stores.map((s) => escapeHtml(s.label)).join(" · ")}</div>
