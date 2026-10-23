@@ -36,6 +36,7 @@ const APPS = [
 ];
 
 // Browser extensions, installed from their stores (which handle updates).
+// A store with `channel` instead of `url` links to the newest .xpi in that release, and is hidden until one exists.
 const EXTENSIONS = [
   {
     id: "xtrf-tools",
@@ -46,6 +47,17 @@ const EXTENSIONS = [
     stores: [
       { label: "Firefox", url: "https://addons.mozilla.org/firefox/addon/elan-xtrf-tools/" },
       { label: "Chrome / Edge", url: "https://chromewebstore.google.com/detail/chhckeiobgkakpafnhilnjinigmohkjo" },
+    ],
+  },
+  {
+    id: "in-house-tools",
+    icon: "icons/in-house-tools.png",
+    name: "In-House Tools",
+    description: "Browser extension for ELAN in-house translators working in the Vendor Portal.",
+    color: "#0284c7",
+    stores: [
+      { label: "Firefox", channel: "in-house-tools-latest" },
+      { label: "Chrome / Edge", url: "https://chromewebstore.google.com/detail/kkhpodpjileamaaghgnmgmdfhoodadgc" },
     ],
   },
 ];
@@ -71,20 +83,20 @@ async function fetchReleases() {
   return res.json();
 }
 
-// Finds the newest installer in an application's update channel.
+// Finds the newest installer (.exe, or app.ext) in an application's update channel.
 function resolveApp(app, releases) {
   const channel = releases.find((r) => r.tag_name === app.channel);
   if (!channel) return null;
 
   const installers = channel.assets
-    .map((a) => ({ asset: a, match: a.name.match(/-(\d+(?:\.\d+)+)\.exe$/i) }))
+    .map((a) => ({ asset: a, match: a.name.match(new RegExp(String.raw`-(\d+(?:\.\d+)+)\.${app.ext || "exe"}$`, "i")) }))
     .filter((x) => x.match)
     .map((x) => ({ ...x.asset, version: x.match[1] }))
     .sort((a, b) => compareVersions(b.version, a.version));
   if (!installers.length) return null;
 
   const latest = installers[0];
-  const notes = releases.find((r) => r.tag_name === app.notesTag(latest.version));
+  const notes = app.notesTag && releases.find((r) => r.tag_name === app.notesTag(latest.version));
   return {
     version: latest.version,
     url: latest.browser_download_url,

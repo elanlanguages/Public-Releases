@@ -35,7 +35,7 @@
       background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px;
       display: flex; flex-direction: column; gap: 16px; transition: box-shadow .2s, border-color .2s;
     }
-    #extensions .card { grid-column: 1 / -1; }
+    #extensions .card:only-child { grid-column: 1 / -1; }
     .card:target { border-color: var(--app); box-shadow: 0 0 0 3px color-mix(in srgb, var(--app) 25%, transparent); }
     .top { display: flex; gap: 14px; align-items: center; }
     .logo {
@@ -102,7 +102,7 @@
   </div>
   <div class="toast" id="toast">Link copied</div>
 
-  <script src="apps.js?v=3"></script>
+  <script src="apps.js?v=4"></script>
   <script>
     const ICON_DOWNLOAD = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>';
     const ICON_LINK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>';
@@ -168,19 +168,27 @@
       return el;
     }
 
-    function extensionCard(ext) {
+    // Stores with a fixed URL, plus those whose .xpi was found in the releases.
+    function storeLinks(ext, releases) {
+      return ext.stores
+        .map((s) => (s.url ? s : { ...s, url: releases && resolveApp({ channel: s.channel, ext: "xpi" }, releases)?.url }))
+        .filter((s) => s.url);
+    }
+
+    function extensionCard(ext, releases) {
+      const stores = storeLinks(ext, releases);
       const el = newCard(ext);
       el.innerHTML = `
         <div class="top">
           ${logo(ext)}
           <div>
             <h2>${escapeHtml(ext.name)}</h2>
-            <div class="meta">${ext.stores.map((s) => escapeHtml(s.label)).join(" · ")}</div>
+            <div class="meta">${stores.map((s) => escapeHtml(s.label)).join(" · ")}</div>
           </div>
         </div>
         <p class="desc">${escapeHtml(ext.description)}</p>
         <div class="actions">
-          ${ext.stores.map((s, i) => `<a class="btn ${i ? "btn-ghost" : "btn-primary"}" href="${s.url}">${ICON_DOWNLOAD} Add to ${escapeHtml(s.label)}</a>`).join("")}
+          ${stores.map((s, i) => `<a class="btn ${i ? "btn-ghost" : "btn-primary"}" href="${s.url}">${ICON_DOWNLOAD} Add to ${escapeHtml(s.label)}</a>`).join("")}
         </div>`;
       return el;
     }
@@ -204,13 +212,16 @@
       }
     });
 
-    const extensions = document.getElementById("extensions");
-    for (const ext of EXTENSIONS) extensions.appendChild(extensionCard(ext));
+    function renderExtensions(releases) {
+      document.getElementById("extensions").replaceChildren(...EXTENSIONS.map((ext) => extensionCard(ext, releases)));
+    }
+    renderExtensions(null);
 
     (async () => {
       const container = document.getElementById("apps");
       try {
         const releases = await fetchReleases();
+        renderExtensions(releases);
         container.innerHTML = "";
         for (const app of APPS) {
           const info = resolveApp(app, releases);
