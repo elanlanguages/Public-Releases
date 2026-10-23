@@ -1,6 +1,7 @@
 // Applications shown on the site.
 // - channel: tag of the update-channel release (always current)
 // - notesTag: tag of the versioned release, used for the release notes
+// When editing this file, bump ?v= in index.html and download.html so browsers drop the cached copy.
 const REPO = "elanlanguages/Public-Releases";
 
 const APPS = [
