@@ -28,13 +28,19 @@ const APPS = [
     notesTag: (v) => `swornfinder-v${v}`,
     color: "#9333ea",
   },
+];
+
+// Browser extensions, installed from their stores (which handle updates).
+const EXTENSIONS = [
   {
     id: "xtrf-tools",
     name: "XTRF Tools",
-    description: "Companion tools for XTRF.",
-    channel: "xtrf-tools-latest",
-    notesTag: (v) => `xtrf-tools-v${v}`,
+    description: "Browser extension that enhances XTRF for ELAN Languages employees.",
     color: "#ea580c",
+    stores: [
+      { label: "Firefox", url: "https://addons.mozilla.org/firefox/addon/elan-xtrf-tools/" },
+      { label: "Chrome / Edge", url: "https://chromewebstore.google.com/detail/chhckeiobgkakpafnhilnjinigmohkjo" },
+    ],
   },
 ];
 

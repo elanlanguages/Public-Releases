@@ -27,6 +27,8 @@
     .brand { font-size: 14px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
     h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.15; margin: 8px 0 12px; }
     header p { color: var(--muted); margin: 0; max-width: 60ch; }
+    section + section { margin-top: 44px; }
+    section > h3 { font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 0 0 14px; }
 
     .grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 400px), 1fr)); }
     .card {
@@ -67,8 +69,6 @@
 
     .skeleton { color: var(--muted); }
     .error { color: var(--muted); font-size: 14px; }
-    footer { margin-top: 48px; color: var(--muted); font-size: 13px; text-align: center; }
-    footer a { color: inherit; }
 
     .toast {
       position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); opacity: 0;
@@ -82,16 +82,20 @@
   <div class="wrap">
     <header>
       <div class="brand">ELAN Languages</div>
-      <h1>Windows applications</h1>
-      <p>Download the latest version of our applications. Once installed, they update automatically.</p>
+      <h1>Downloads</h1>
+      <p>Get the latest version of our tools. Once installed, they update automatically.</p>
     </header>
 
-    <main class="grid" id="apps"><p class="skeleton">Loading applications…</p></main>
-
-    <footer>
-      Some applications require an authorized ELAN Languages account.<br>
-      <a href="https://github.com/elanlanguages/Public-Releases/releases">All releases on GitHub</a>
-    </footer>
+    <main>
+      <section>
+        <h3>Windows applications</h3>
+        <div class="grid" id="apps"><p class="skeleton">Loading applications…</p></div>
+      </section>
+      <section>
+        <h3>Browser extension</h3>
+        <div class="grid" id="extensions"></div>
+      </section>
+    </main>
   </div>
   <div class="toast" id="toast">Link copied</div>
 
@@ -127,15 +131,21 @@
     const formatDate = (d) => new Date(d).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
     const permalink = (app) => new URL(`download.html?app=${app.id}`, location.href).href;
 
-    function card(app, info) {
+    const initials = (name) => name.split(/\s+/).filter((w) => /^[A-Z]/.test(w)).map((w) => w[0]).join("").slice(0, 2);
+
+    function newCard(item) {
       const el = document.createElement("article");
       el.className = "card";
-      el.id = app.id;
-      el.style.setProperty("--app", app.color);
-      const initials = app.name.split(/\s+/).filter((w) => /^[A-Z]/.test(w)).map((w) => w[0]).join("").slice(0, 2);
+      el.id = item.id;
+      el.style.setProperty("--app", item.color);
+      return el;
+    }
+
+    function card(app, info) {
+      const el = newCard(app);
       el.innerHTML = `
         <div class="top">
-          <div class="logo" aria-hidden="true">${initials}</div>
+          <div class="logo" aria-hidden="true">${initials(app.name)}</div>
           <div>
             <h2>${escapeHtml(app.name)}<span class="version">v${info.version}</span></h2>
             <div class="meta">Windows · updated ${formatDate(info.date)}</div>
@@ -151,6 +161,23 @@
           <summary>What's new in ${info.version}</summary>
           <div class="notes">${renderMarkdown(info.notes)}</div>
         </details>` : ""}`;
+      return el;
+    }
+
+    function extensionCard(ext) {
+      const el = newCard(ext);
+      el.innerHTML = `
+        <div class="top">
+          <div class="logo" aria-hidden="true">${initials(ext.name)}</div>
+          <div>
+            <h2>${escapeHtml(ext.name)}</h2>
+            <div class="meta">${ext.stores.map((s) => escapeHtml(s.label)).join(" · ")}</div>
+          </div>
+        </div>
+        <p class="desc">${escapeHtml(ext.description)}</p>
+        <div class="actions">
+          ${ext.stores.map((s, i) => `<a class="btn ${i ? "btn-ghost" : "btn-primary"}" href="${s.url}">${ICON_DOWNLOAD} Add to ${escapeHtml(s.label)}</a>`).join("")}
+        </div>`;
       return el;
     }
 
@@ -172,6 +199,9 @@
         prompt("Copy this link:", btn.dataset.copy);
       }
     });
+
+    const extensions = document.getElementById("extensions");
+    for (const ext of EXTENSIONS) extensions.appendChild(extensionCard(ext));
 
     (async () => {
       const container = document.getElementById("apps");

@@ -19,6 +19,10 @@
     (async () => {
       const msg = document.getElementById("msg");
       const id = new URLSearchParams(location.search).get("app");
+      if (EXTENSIONS.some((e) => e.id === id)) {
+        location.replace(`./#${id}`);
+        return;
+      }
       const app = APPS.find((a) => a.id === id);
       if (!app) {
         msg.innerHTML = 'Unknown application. <a href="./">See all applications</a>';
