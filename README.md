@@ -17,5 +17,6 @@ The site lives in `docs/` (GitHub Pages, branch `main`, folder `/docs`). Add or 
 - `xtrf-tools-latest` — XTRF Tools
 - `xtrf-for-windows-latest` — XTRF for Windows
 - `swornfinder-latest` — SwornFinder
+- `in-house-tools-latest` — In-House Tools (signed Firefox `.xpi`)
 
 Applications may require an authorized ELAN Languages account.
