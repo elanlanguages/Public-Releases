@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Applications ELAN Languages</title>
-  <meta name="description" content="Téléchargez la dernière version des applications Windows d'ELAN Languages.">
+  <title>ELAN Languages Apps</title>
+  <meta name="description" content="Download the latest version of ELAN Languages Windows applications.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%232563eb'/><path d='M16 7v13m0 0-5-5m5 5 5-5M9 25h14' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
   <style>
     :root {
@@ -82,18 +82,18 @@
   <div class="wrap">
     <header>
       <div class="brand">ELAN Languages</div>
-      <h1>Applications Windows</h1>
-      <p>Téléchargez la dernière version de nos applications. Une fois installées, elles se mettent à jour automatiquement.</p>
+      <h1>Windows applications</h1>
+      <p>Download the latest version of our applications. Once installed, they update automatically.</p>
     </header>
 
-    <main class="grid" id="apps"><p class="skeleton">Chargement des applications…</p></main>
+    <main class="grid" id="apps"><p class="skeleton">Loading applications…</p></main>
 
     <footer>
-      Certaines applications nécessitent un compte ELAN Languages autorisé.<br>
-      <a href="https://github.com/elanlanguages/Public-Releases/releases">Toutes les versions sur GitHub</a>
+      Some applications require an authorized ELAN Languages account.<br>
+      <a href="https://github.com/elanlanguages/Public-Releases/releases">All releases on GitHub</a>
     </footer>
   </div>
-  <div class="toast" id="toast">Lien copié</div>
+  <div class="toast" id="toast">Link copied</div>
 
   <script src="apps.js"></script>
   <script>
@@ -102,7 +102,7 @@
 
     const escapeHtml = (s) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
-    // Mini-convertisseur Markdown pour les notes de version (listes, gras, liens, code).
+    // Minimal Markdown renderer for release notes (lists, bold, links, code).
     function renderMarkdown(md) {
       const inline = (s) => escapeHtml(s)
         .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
@@ -123,8 +123,8 @@
       return html + (inList ? "</ul>" : "");
     }
 
-    const formatSize = (b) => `${Math.round(b / 1048576)} Mo`;
-    const formatDate = (d) => new Date(d).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+    const formatSize = (b) => `${Math.round(b / 1048576)} MB`;
+    const formatDate = (d) => new Date(d).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
     const permalink = (app) => new URL(`download.html?app=${app.id}`, location.href).href;
 
     function card(app, info) {
@@ -138,17 +138,17 @@
           <div class="logo" aria-hidden="true">${initials}</div>
           <div>
             <h2>${escapeHtml(app.name)}<span class="version">v${info.version}</span></h2>
-            <div class="meta">Windows · mis à jour le ${formatDate(info.date)}</div>
+            <div class="meta">Windows · updated ${formatDate(info.date)}</div>
           </div>
         </div>
         <p class="desc">${escapeHtml(app.description)}</p>
         <div class="actions">
-          <a class="btn btn-primary" href="${info.url}">${ICON_DOWNLOAD} Télécharger <span class="size">${formatSize(info.size)}</span></a>
-          <button class="btn btn-ghost" type="button" data-copy="${permalink(app)}">${ICON_LINK} Copier le lien</button>
+          <a class="btn btn-primary" href="${info.url}">${ICON_DOWNLOAD} Download <span class="size">${formatSize(info.size)}</span></a>
+          <button class="btn btn-ghost" type="button" data-copy="${permalink(app)}">${ICON_LINK} Copy link</button>
         </div>
         ${info.notes ? `
         <details>
-          <summary>Nouveautés de la version ${info.version}</summary>
+          <summary>What's new in ${info.version}</summary>
           <div class="notes">${renderMarkdown(info.notes)}</div>
         </details>` : ""}`;
       return el;
@@ -167,9 +167,9 @@
       if (!btn) return;
       try {
         await navigator.clipboard.writeText(btn.dataset.copy);
-        showToast("Lien de téléchargement copié — il pointera toujours vers la dernière version");
+        showToast("Download link copied — it always points to the latest version");
       } catch {
-        prompt("Copiez ce lien :", btn.dataset.copy);
+        prompt("Copy this link:", btn.dataset.copy);
       }
     });
 
@@ -184,8 +184,8 @@
         }
         if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView({ block: "center" });
       } catch {
-        container.innerHTML = `<p class="error">Impossible de charger la liste des applications pour le moment.
-          <a class="notes-link" href="https://github.com/${REPO}/releases">Voir les téléchargements sur GitHub</a>.</p>`;
+        container.innerHTML = `<p class="error">The application list could not be loaded right now.
+          <a class="notes-link" href="https://github.com/${REPO}/releases">See downloads on GitHub</a>.</p>`;
       }
     })();
   </script>

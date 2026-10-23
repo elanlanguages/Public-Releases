@@ -1,13 +1,13 @@
-// Liste des applications affichées sur le site.
-// - channel : tag de la release « canal de mise à jour » (toujours à jour)
-// - notesTag : tag de la release versionnée, pour afficher les notes de version
+// Applications shown on the site.
+// - channel: tag of the update-channel release (always current)
+// - notesTag: tag of the versioned release, used for the release notes
 const REPO = "elanlanguages/Public-Releases";
 
 const APPS = [
   {
     id: "elan-chat",
     name: "ELAN Chat",
-    description: "L'application de bureau ELAN Chat pour Windows.",
+    description: "The ELAN Chat desktop app for Windows.",
     channel: "elan-chat-latest",
     notesTag: (v) => `v${v}`,
     color: "#2563eb",
@@ -15,7 +15,7 @@ const APPS = [
   {
     id: "xtrf-for-windows",
     name: "XTRF for Windows",
-    description: "XTRF dans une application Windows dédiée.",
+    description: "XTRF in a dedicated Windows app.",
     channel: "xtrf-for-windows-latest",
     notesTag: (v) => `xtrf-for-windows-v${v}`,
     color: "#0d9488",
@@ -23,7 +23,7 @@ const APPS = [
   {
     id: "swornfinder",
     name: "SwornFinder",
-    description: "Recherche de traducteurs et interprètes jurés.",
+    description: "Find sworn translators and interpreters.",
     channel: "swornfinder-latest",
     notesTag: (v) => `swornfinder-v${v}`,
     color: "#9333ea",
@@ -31,7 +31,7 @@ const APPS = [
   {
     id: "xtrf-tools",
     name: "XTRF Tools",
-    description: "Outils complémentaires pour XTRF.",
+    description: "Companion tools for XTRF.",
     channel: "xtrf-tools-latest",
     notesTag: (v) => `xtrf-tools-v${v}`,
     color: "#ea580c",
@@ -50,7 +50,7 @@ function compareVersions(a, b) {
   return 0;
 }
 
-// Renvoie la liste des releases du dépôt (une seule requête à l'API GitHub).
+// Returns the repository's releases (a single GitHub API request).
 async function fetchReleases() {
   const res = await fetch(`https://api.github.com/repos/${REPO}/releases?per_page=100`, {
     headers: { Accept: "application/vnd.github+json" },
@@ -59,7 +59,7 @@ async function fetchReleases() {
   return res.json();
 }
 
-// Pour une application, trouve l'installateur le plus récent dans son canal.
+// Finds the newest installer in an application's update channel.
 function resolveApp(app, releases) {
   const channel = releases.find((r) => r.tag_name === app.channel);
   if (!channel) return null;
