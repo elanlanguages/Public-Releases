@@ -188,7 +188,7 @@
         </div>
         <p class="desc">${escapeHtml(ext.description)}</p>
         <div class="actions">
-          ${stores.map((s, i) => `<a class="btn ${i ? "btn-ghost" : "btn-primary"}" href="${s.url}">${ICON_DOWNLOAD} Add to ${escapeHtml(s.label)}</a>`).join("")}
+          ${stores.map((s) => `<a class="btn btn-primary" href="${s.url}">${ICON_DOWNLOAD} Add to ${escapeHtml(s.label)}</a>`).join("")}
         </div>`;
       return el;
     }
