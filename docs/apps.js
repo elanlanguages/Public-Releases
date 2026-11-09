@@ -60,6 +60,17 @@ const EXTENSIONS = [
       { label: "Chrome / Edge", url: "https://chromewebstore.google.com/detail/kkhpodpjileamaaghgnmgmdfhoodadgc" },
     ],
   },
+  {
+    id: "plunet-tools",
+    icon: "icons/plunet-tools.png",
+    name: "Plunet Tools",
+    description: "Browser extension for the Plunet portal.",
+    color: "#4f46e5",
+    stores: [
+      { label: "Firefox", channel: "plunet-tools-latest" },
+      { label: "Chrome / Edge", url: "https://chromewebstore.google.com/detail/elan-plunet-tools/pnhleapohgjhemlbfghemnpjapnkahnl" },
+    ],
+  },
 ];
 
 const RELEASE_PAGE = (tag) => `https://github.com/${REPO}/releases/tag/${tag}`;
