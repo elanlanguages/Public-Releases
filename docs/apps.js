@@ -67,7 +67,7 @@ const EXTENSIONS = [
     description: "Browser extension for the Plunet portal.",
     color: "#4f46e5",
     stores: [
-      { label: "Firefox", channel: "plunet-tools-latest" },
+      { label: "Firefox", url: "https://addons.mozilla.org/firefox/addon/elan-plunet-tools/" },
       { label: "Chrome / Edge", url: "https://chromewebstore.google.com/detail/elan-plunet-tools/pnhleapohgjhemlbfghemnpjapnkahnl" },
     ],
   },
