@@ -10,7 +10,7 @@ const APPS = [
     id: "elan-chat",
     icon: "icons/elan-chat.png",
     name: "ELAN Chat",
-    description: "The ELAN AI Chat desktop app for Windows.",
+    description: "ELAN's AI chat assistant in its own Windows app, outside the browser.",
     channel: "elan-chat-latest",
     notesTag: (v) => `v${v}`,
     color: "#2563eb",
@@ -19,7 +19,7 @@ const APPS = [
     id: "xtrf-for-windows",
     icon: "icons/xtrf-for-windows.png",
     name: "XTRF for Windows",
-    description: "XTRF in a dedicated Windows app.",
+    description: "Opens XTRF in its own window, apart from your browser tabs.",
     channel: "xtrf-for-windows-latest",
     notesTag: (v) => `xtrf-for-windows-v${v}`,
     color: "#0d9488",
@@ -28,7 +28,7 @@ const APPS = [
     id: "swornfinder",
     icon: "icons/swornfinder.png",
     name: "SwornFinder",
-    description: "Find sworn translators and interpreters (BE, FR, DE).",
+    description: "Find sworn translators and interpreters in Belgium, France and Germany.",
     channel: "swornfinder-latest",
     notesTag: (v) => `swornfinder-v${v}`,
     color: "#9333ea",
@@ -85,8 +85,13 @@ function compareVersions(a, b) {
   return 0;
 }
 
-// Returns the repository's releases (a single GitHub API request).
+// Returns the repository's releases: docs/releases.json (kept current by the
+// "Update releases.json" workflow), or the GitHub API if that file is missing.
 async function fetchReleases() {
+  try {
+    const local = await fetch("releases.json", { cache: "no-cache" });
+    if (local.ok) return await local.json();
+  } catch {}
   const res = await fetch(`https://api.github.com/repos/${REPO}/releases?per_page=100`, {
     headers: { Accept: "application/vnd.github+json" },
   });

@@ -1,0 +1,39 @@
+# Writes docs/releases.json so the site reads releases from GitHub Pages
+# instead of calling the GitHub API on every visit (60 requests/hour per IP).
+name: Update releases.json
+
+on:
+  release:
+    types: [published, edited, deleted]
+  schedule:
+    - cron: "17 * * * *" # asset uploads to the -latest channels fire no release event
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: releases-json
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/${{ github.repository }}/releases?per_page=100" --jq '[.[] | {
+            tag_name, published_at, body, html_url,
+            assets: [.assets[] | {name, size, browser_download_url, updated_at}]
+          }]' > docs/releases.json
+      - name: Commit if changed
+        run: |
+          git diff --quiet docs/releases.json && exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/releases.json
+          git commit -m "Update releases.json"
+          git push
