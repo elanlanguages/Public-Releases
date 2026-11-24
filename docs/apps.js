@@ -1,8 +1,9 @@
 // Applications shown on the site.
 // - channel: tag of the update-channel release (always current)
 // - notesTag: tag of the versioned release, used for the release notes
-// - icon: 128px PNG in docs/icons (falls back to initials)
-// When editing this file, bump ?v= in index.html and download.html so browsers drop the cached copy.
+// - icon: 128px PNG in docs/icons
+// - screenshot: optional, shown on the tool's page (docs/screens)
+// After editing this file, run `node site/build.mjs` (the workflow also does it) and bump ?v= in download.html.
 const REPO = "elanlanguages/Public-Releases";
 
 const APPS = [
@@ -10,7 +11,7 @@ const APPS = [
     id: "elan-chat",
     icon: "icons/elan-chat.png",
     name: "ELAN Chat",
-    description: "ELAN's AI chat assistant in its own Windows app, outside the browser.",
+    description: "ELAN’s AI chat assistant in its own Windows app, outside the browser.",
     channel: "elan-chat-latest",
     notesTag: (v) => `v${v}`,
     color: "#2563eb",
@@ -28,7 +29,8 @@ const APPS = [
     id: "swornfinder",
     icon: "icons/swornfinder.png",
     name: "SwornFinder",
-    description: "Find sworn translators and interpreters in Belgium, France and Germany.",
+    description: "Find sworn translators and interpreters in Belgium, France, Germany and Poland.",
+    screenshot: "screens/swornfinder.png",
     channel: "swornfinder-latest",
     notesTag: (v) => `swornfinder-v${v}`,
     color: "#9333ea",

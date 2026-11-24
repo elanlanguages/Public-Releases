@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plunet Tools - ELAN Languages</title>
+  <meta name="description" content="Browser extension for the Plunet portal.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='white'/><path d='M7 9h18M7 16h18M7 23h18' stroke='%2300a2e1' stroke-width='4' stroke-linecap='round'/></svg>">
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../site.css">
+</head>
+<body>
+  <header class="nav container">
+    <a class="wordmark" href="../">ELAN Languages</a>
+    <nav aria-label="Sections">
+      <a href="../#extensions">Browser extensions</a>
+      <a href="../#apps">Windows apps</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="desk desk--tool">
+      <div class="container tool-head">
+        <img class="tool-icon" src="../icons/plunet-tools.png" width="96" height="96" alt="">
+        <div>
+          <h1>Plunet Tools</h1>
+          <p class="lead">Browser extension for the Plunet portal.</p>
+          <p class="row__meta"><span>Your browser’s store keeps it up to date.</span></p>
+          <div class="actions">
+          <a class="btn btn--ink" data-store="chromium" href="https://chromewebstore.google.com/detail/elan-plunet-tools/pnhleapohgjhemlbfghemnpjapnkahnl"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg> Add to Chrome / Edge</a>
+          <a class="btn btn--card" data-store="firefox" href="https://addons.mozilla.org/firefox/addon/elan-plunet-tools/"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg> Add to Firefox</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="foot">
+    <div class="container foot__inner">
+      <p class="foot__mark">ELAN Languages</p>
+      <p>Every download comes from the <a href="https://github.com/elanlanguages/Public-Releases/releases">ELAN releases on GitHub</a>.</p>
+    </div>
+  </footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="../site.js"></script>
+</body>
+</html>

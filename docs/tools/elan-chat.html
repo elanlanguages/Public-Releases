@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ELAN Chat - ELAN Languages</title>
+  <meta name="description" content="ELAN’s AI chat assistant in its own Windows app, outside the browser.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='white'/><path d='M7 9h18M7 16h18M7 23h18' stroke='%2300a2e1' stroke-width='4' stroke-linecap='round'/></svg>">
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../site.css">
+</head>
+<body>
+  <header class="nav container">
+    <a class="wordmark" href="../">ELAN Languages</a>
+    <nav aria-label="Sections">
+      <a href="../#extensions">Browser extensions</a>
+      <a href="../#apps">Windows apps</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="desk desk--tool">
+      <div class="container tool-head">
+        <img class="tool-icon" src="../icons/elan-chat.png" width="96" height="96" alt="">
+        <div>
+          <h1>ELAN Chat</h1>
+          <p class="lead">ELAN’s AI chat assistant in its own Windows app, outside the browser.</p>
+          <p class="row__meta"><span class="fig">v1.1.10</span><span>Updated 18 September 2026</span><span>Windows</span></p>
+          <div class="actions">
+          <a class="btn btn--ink" href="https://github.com/elanlanguages/Public-Releases/releases/download/elan-chat-latest/ELAN-Chat-Setup-1.1.10.exe"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg> Download <span class="fig btn__size">90 MB</span></a>
+          <button class="btn btn--card" type="button" data-copy="../download.html?app=elan-chat"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Copy link</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block container" aria-labelledby="history-head">
+      <div class="block__head">
+        <h2 id="history-head">Version history</h2>
+        <p>Run the installer once; the app then updates itself to each new version.</p>
+      </div>
+      <ol class="sheet history">
+        <li class="history__item">
+          <p class="history__when"><span class="fig">v1.1.10</span><span>18 September 2026</span></p>
+          <div class="notes"><p>Fixes drag-and-drop file attachments when the ELAN Chat website rejects the drag event.</p></div>
+        </li>
+      </ol>
+    </section>
+  </main>
+  <footer class="foot">
+    <div class="container foot__inner">
+      <p class="foot__mark">ELAN Languages</p>
+      <p>Every download comes from the <a href="https://github.com/elanlanguages/Public-Releases/releases">ELAN releases on GitHub</a>.</p>
+    </div>
+  </footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="../site.js"></script>
+</body>
+</html>

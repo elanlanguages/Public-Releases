@@ -4,248 +4,184 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ELAN Apps and Extensions</title>
-  <meta name="description" content="Download the latest version of ELAN Languages Windows applications.">
+  <meta name="description" content="Windows apps and browser extensions made by ELAN Languages.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='white'/><path d='M7 9h18M7 16h18M7 23h18' stroke='%2300a2e1' stroke-width='4' stroke-linecap='round'/></svg>">
-  <style>
-    :root {
-      --bg: #f6f7f9; --card: #ffffff; --text: #111827; --muted: #6b7280; --border: #e5e7eb;
-      --accent: #2563eb; --on-app: #ffffff; --soft: #f3f4f6;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #0f1115; --card: #181b21; --text: #f3f4f6; --muted: #9ca3af; --border: #2a2f38;
-        --accent: #3b82f6; --soft: #22262e;
-      }
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0; background: var(--bg); color: var(--text);
-      font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    }
-    .wrap { max-width: 920px; margin: 0 auto; padding: 56px 16px 40px; }
-    header { margin-bottom: 36px; }
-    .brand { font-size: 15px; font-weight: 600; color: var(--accent); }
-    h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.15; margin: 8px 0 12px; }
-    header p { color: var(--muted); margin: 0; max-width: 60ch; }
-    section + section { margin-top: 44px; }
-    section > h3 { font-size: 15px; font-weight: 600; color: var(--muted); margin: 0 0 14px; }
-
-    .grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 400px), 1fr)); }
-    .card {
-      background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px;
-      display: flex; flex-direction: column; gap: 16px; transition: box-shadow .2s, border-color .2s;
-    }
-    #extensions .card:only-child { grid-column: 1 / -1; }
-    .card:target { border-color: var(--app); box-shadow: 0 0 0 3px color-mix(in srgb, var(--app) 25%, transparent); }
-    .top { display: flex; gap: 14px; align-items: center; }
-    .logo {
-      width: 52px; height: 52px; border-radius: 14px; flex: none; display: grid; place-items: center;
-      background: var(--app); color: var(--on-app); font-weight: 700; font-size: 20px;
-    }
-    .logo:has(img) { background: none; }
-    .logo img { width: 100%; height: 100%; object-fit: contain; }
-    .card h2 { font-size: 20px; margin: 0; }
-    .meta { color: var(--muted); font-size: 14px; }
-    .version {
-      display: inline-block; font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 999px;
-      background: color-mix(in srgb, var(--app) 14%, transparent); color: var(--app); margin-left: 6px; vertical-align: 2px;
-    }
-    .desc { margin: 0; }
-    .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: auto; }
-    .btn {
-      display: inline-flex; align-items: center; gap: 8px; border-radius: 10px; padding: 10px 16px;
-      font: inherit; font-weight: 600; font-size: 15px; text-decoration: none; cursor: pointer; border: 1px solid transparent;
-    }
-    .btn-primary { background: var(--app); color: var(--on-app); }
-    .btn-primary:hover { filter: brightness(1.08); }
-    .btn-ghost { background: var(--soft); color: var(--text); border-color: var(--border); }
-    .btn-ghost:hover { border-color: var(--muted); }
-    .btn svg { width: 18px; height: 18px; }
-    .size { font-weight: 400; opacity: .85; font-size: 13px; }
-
-    details { border-top: 1px solid var(--border); padding-top: 12px; font-size: 14px; }
-    summary { cursor: pointer; color: var(--muted); font-weight: 500; }
-    .notes { margin-top: 10px; }
-    .notes ul { padding-left: 20px; margin: 6px 0; }
-    .notes p { margin: 6px 0; }
-    .notes a, .notes-link { color: var(--accent); }
-
-    .skeleton { color: var(--muted); }
-    .error { color: var(--muted); font-size: 14px; }
-
-    .toast {
-      position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); opacity: 0;
-      background: var(--text); color: var(--bg); padding: 10px 16px; border-radius: 10px; font-size: 14px;
-      transition: opacity .2s, transform .2s; pointer-events: none;
-    }
-    .toast.show { opacity: 1; transform: translate(-50%, 0); }
-
-    a:focus-visible, .btn:focus-visible, summary:focus-visible {
-      outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 10px;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .card, .toast { transition: none; }
-      .toast { transform: translate(-50%, 0); }
-    }
-  </style>
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="site.css">
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div class="brand">ELAN Languages</div>
-      <h1>Apps and browser extensions</h1>
-      <p>Windows apps and browser extensions made by ELAN Languages. Install them once and they keep themselves up to date.</p>
-    </header>
+  <header class="nav container">
+    <a class="wordmark" href="">ELAN Languages</a>
+    <nav aria-label="Sections">
+      <a href="#extensions">Browser extensions</a>
+      <a href="#apps">Windows apps</a>
+    </nav>
+  </header>
 
-    <main>
-      <noscript><p class="error">This page needs JavaScript to list the downloads.
-        <a class="notes-link" href="https://github.com/elanlanguages/Public-Releases/releases">See all downloads on GitHub</a>.</p></noscript>
-      <section>
-        <h3>Browser extension</h3>
-        <div class="grid" id="extensions"></div>
-      </section>
-      <section>
-        <h3>Windows applications</h3>
-        <div class="grid" id="apps"><p class="skeleton">Loading applications…</p></div>
-      </section>
-    </main>
-  </div>
-  <div class="toast" id="toast">Link copied</div>
-
-  <script src="apps.js?v=6"></script>
-  <script>
-    const ICON_DOWNLOAD = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>';
-    const ICON_LINK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>';
-
-    const escapeHtml = (s) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-
-    // Minimal Markdown renderer for release notes (lists, bold, links, code).
-    function renderMarkdown(md) {
-      const inline = (s) => escapeHtml(s)
-        .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-        .replace(/`(.+?)`/g, "<code>$1</code>")
-        .replace(/\[(.+?)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2">$1</a>');
-      let html = "", inList = false;
-      for (const raw of md.split(/\r?\n/)) {
-        const line = raw.trim();
-        const item = line.match(/^[-*]\s+(.*)/);
-        if (item) {
-          if (!inList) { html += "<ul>"; inList = true; }
-          html += `<li>${inline(item[1])}</li>`;
-          continue;
-        }
-        if (inList) { html += "</ul>"; inList = false; }
-        if (line) html += `<p>${inline(line.replace(/^#+\s*/, ""))}</p>`;
-      }
-      return html + (inList ? "</ul>" : "");
-    }
-
-    const formatSize = (b) => `${Math.round(b / 1048576)} MB`;
-    const formatDate = (d) => new Date(d).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
-    const permalink = (app) => new URL(`download.html?app=${app.id}`, location.href).href;
-
-    const logo = (item) => `<div class="logo" aria-hidden="true">${item.icon ? `<img src="${item.icon}" alt="">` : initials(item.name)}</div>`;
-    const initials = (name) => name.split(/\s+/).filter((w) => /^[A-Z]/.test(w)).map((w) => w[0]).join("").slice(0, 2);
-
-    function newCard(item) {
-      const el = document.createElement("article");
-      el.className = "card";
-      el.id = item.id;
-      el.style.setProperty("--app", item.color);
-      return el;
-    }
-
-    function card(app, info) {
-      const el = newCard(app);
-      el.innerHTML = `
-        <div class="top">
-          ${logo(app)}
-          <div>
-            <h2>${escapeHtml(app.name)}<span class="version">v${info.version}</span></h2>
-            <div class="meta">Updated ${formatDate(info.date)}</div>
+  <main>
+    <section class="desk">
+      <div class="container desk__inner">
+        <div class="desk__text">
+          <h1>Tools for working at ELAN</h1>
+          <p class="lead">Install a tool once and it keeps itself up to date.</p>
+          <div class="actions">
+            <a class="btn btn--ink" href="#apps">See Windows apps</a>
+            <a class="btn btn--card" href="#extensions">See browser extensions</a>
           </div>
         </div>
-        <p class="desc">${escapeHtml(app.description)}</p>
-        <div class="actions">
-          <a class="btn btn-primary" href="${info.url}">${ICON_DOWNLOAD} Download <span class="size">${formatSize(info.size)}</span></a>
-          <button class="btn btn-ghost" type="button" data-copy="${permalink(app)}">${ICON_LINK} Copy link</button>
-        </div>
-        ${info.notes ? `
-        <details>
-          <summary>What's new in ${info.version}</summary>
-          <div class="notes">${renderMarkdown(info.notes)}</div>
-        </details>` : ""}`;
-      return el;
-    }
+        <ul class="index-cards" aria-label="All tools">
+        <li><a class="index-card" href="tools/elan-chat.html">
+          <img class="tool-icon" src="icons/elan-chat.png" width="48" height="48" alt="">
+          <span class="index-card__name">ELAN Chat</span>
+          <span class="index-card__line"><span class="fig">v1.1.10</span> for Windows</span>
+        </a></li>
+        <li><a class="index-card" href="tools/xtrf-for-windows.html">
+          <img class="tool-icon" src="icons/xtrf-for-windows.png" width="48" height="48" alt="">
+          <span class="index-card__name">XTRF for Windows</span>
+          <span class="index-card__line"><span class="fig">v1.18.2</span> for Windows</span>
+        </a></li>
+        <li><a class="index-card" href="tools/swornfinder.html">
+          <img class="tool-icon" src="icons/swornfinder.png" width="48" height="48" alt="">
+          <span class="index-card__name">SwornFinder</span>
+          <span class="index-card__line"><span class="fig">v2.6.0</span> for Windows</span>
+        </a></li>
+        <li><a class="index-card" href="tools/xtrf-tools.html">
+          <img class="tool-icon" src="icons/xtrf-tools.png" width="48" height="48" alt="">
+          <span class="index-card__name">XTRF Tools</span>
+          <span class="index-card__line">Browser extension</span>
+        </a></li>
+        <li><a class="index-card" href="tools/in-house-tools.html">
+          <img class="tool-icon" src="icons/in-house-tools.png" width="48" height="48" alt="">
+          <span class="index-card__name">In-House Tools</span>
+          <span class="index-card__line">Browser extension</span>
+        </a></li>
+        <li><a class="index-card" href="tools/plunet-tools.html">
+          <img class="tool-icon" src="icons/plunet-tools.png" width="48" height="48" alt="">
+          <span class="index-card__name">Plunet Tools</span>
+          <span class="index-card__line">Browser extension</span>
+        </a></li>
+        </ul>
+      </div>
+    </section>
 
-    // Stores with a fixed URL, plus those whose .xpi was found in the releases,
-    // the visitor's own browser first.
-    const IS_FIREFOX = /firefox/i.test(navigator.userAgent);
-    function storeLinks(ext, releases) {
-      return ext.stores
-        .map((s) => (s.url ? s : { ...s, url: releases && resolveApp({ channel: s.channel, ext: "xpi" }, releases)?.url }))
-        .filter((s) => s.url)
-        .sort((a, b) => ((b.label === "Firefox") - (a.label === "Firefox")) * (IS_FIREFOX ? 1 : -1));
-    }
-
-    function extensionCard(ext, releases) {
-      const stores = storeLinks(ext, releases);
-      const el = newCard(ext);
-      el.innerHTML = `
-        <div class="top">
-          ${logo(ext)}
-          <div>
-            <h2>${escapeHtml(ext.name)}</h2>
+    <section class="block container" id="extensions" aria-labelledby="extensions-head">
+      <div class="block__head">
+        <h2 id="extensions-head">Browser extensions</h2>
+        <p>Add them from your browser’s store, which keeps them updated.</p>
+      </div>
+      <ul class="sheet">
+        <li class="row" id="xtrf-tools">
+          <img class="tool-icon" src="icons/xtrf-tools.png" width="56" height="56" alt="">
+          <div class="row__text">
+            <h3><a href="tools/xtrf-tools.html">XTRF Tools</a></h3>
+            <p>Browser extension for the XTRF Portal.</p>
           </div>
-        </div>
-        <p class="desc">${escapeHtml(ext.description)}</p>
-        <div class="actions">
-          ${stores.map((s, i) => `<a class="btn ${i ? "btn-ghost" : "btn-primary"}" href="${s.url}">${ICON_DOWNLOAD} Add to ${escapeHtml(s.label)}</a>`).join("")}
-        </div>`;
-      return el;
-    }
+          <div class="row__actions">
+          <a class="btn btn--ink" data-store="chromium" href="https://chromewebstore.google.com/detail/chhckeiobgkakpafnhilnjinigmohkjo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg> Add to Chrome / Edge</a>
+          <a class="btn btn--card" data-store="firefox" href="https://addons.mozilla.org/firefox/addon/elan-xtrf-tools/"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg> Add to Firefox</a>
+          </div>
+        </li>
+        <li class="row" id="in-house-tools">
+          <img class="tool-icon" src="icons/in-house-tools.png" width="56" height="56" alt="">
+          <div class="row__text">
+            <h3><a href="tools/in-house-tools.html">In-House Tools</a></h3>
+            <p>Browser extension for in-house translators working in the Vendor Portal.</p>
+          </div>
+          <div class="row__actions">
+          <a class="btn btn--ink" data-store="chromium" href="https://chromewebstore.google.com/detail/kkhpodpjileamaaghgnmgmdfhoodadgc"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg> Add to Chrome / Edge</a>
+          <a class="btn btn--card" data-store="firefox" href="https://github.com/elanlanguages/Public-Releases/releases/download/in-house-tools-latest/in_house_tools-1.2.1.xpi"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg> Add to Firefox</a>
+          </div>
+        </li>
+        <li class="row" id="plunet-tools">
+          <img class="tool-icon" src="icons/plunet-tools.png" width="56" height="56" alt="">
+          <div class="row__text">
+            <h3><a href="tools/plunet-tools.html">Plunet Tools</a></h3>
+            <p>Browser extension for the Plunet portal.</p>
+          </div>
+          <div class="row__actions">
+          <a class="btn btn--ink" data-store="chromium" href="https://chromewebstore.google.com/detail/elan-plunet-tools/pnhleapohgjhemlbfghemnpjapnkahnl"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg> Add to Chrome / Edge</a>
+          <a class="btn btn--card" data-store="firefox" href="https://addons.mozilla.org/firefox/addon/elan-plunet-tools/"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg> Add to Firefox</a>
+          </div>
+        </li>
+      </ul>
+    </section>
 
-    function showToast(text) {
-      const t = document.getElementById("toast");
-      t.textContent = text;
-      t.classList.add("show");
-      clearTimeout(showToast.timer);
-      showToast.timer = setTimeout(() => t.classList.remove("show"), 1800);
-    }
+    <section class="block container" id="apps" aria-labelledby="apps-head">
+      <div class="block__head">
+        <h2 id="apps-head">Windows apps</h2>
+        <p>Run the installer once; the app then updates itself.</p>
+      </div>
+      <ul class="sheet">
+        <li class="row" id="elan-chat">
+          <img class="tool-icon" src="icons/elan-chat.png" width="56" height="56" alt="">
+          <div class="row__text">
+            <h3><a href="tools/elan-chat.html">ELAN Chat</a></h3>
+            <p>ELAN’s AI chat assistant in its own Windows app, outside the browser.</p>
+            <p class="row__meta"><span class="fig">v1.1.10</span><span>Updated 18 September 2026</span></p>
+          </div>
+          <div class="row__actions">
+          <a class="btn btn--ink" href="https://github.com/elanlanguages/Public-Releases/releases/download/elan-chat-latest/ELAN-Chat-Setup-1.1.10.exe"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg> Download <span class="fig btn__size">90 MB</span></a>
+          <button class="btn btn--card" type="button" data-copy="download.html?app=elan-chat"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Copy link</button>
+          </div>
+          <details class="row__notes">
+            <summary>What’s new in 1.1.10</summary>
+            <div class="notes"><p>Fixes drag-and-drop file attachments when the ELAN Chat website rejects the drag event.</p></div>
+          </details>
+        </li>
+        <li class="row" id="xtrf-for-windows">
+          <img class="tool-icon" src="icons/xtrf-for-windows.png" width="56" height="56" alt="">
+          <div class="row__text">
+            <h3><a href="tools/xtrf-for-windows.html">XTRF for Windows</a></h3>
+            <p>Opens XTRF in its own window, apart from your browser tabs.</p>
+            <p class="row__meta"><span class="fig">v1.18.2</span><span>Updated 19 November 2026</span></p>
+          </div>
+          <div class="row__actions">
+          <a class="btn btn--ink" href="https://github.com/elanlanguages/Public-Releases/releases/download/xtrf-for-windows-latest/XTRF-for-Windows-Setup-1.18.2.exe"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg> Download <span class="fig btn__size">109 MB</span></a>
+          <button class="btn btn--card" type="button" data-copy="download.html?app=xtrf-for-windows"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Copy link</button>
+          </div>
+          <details class="row__notes">
+            <summary>What’s new in 1.18.2</summary>
+            <div class="notes"><ul><li><strong>Register in XTRF</strong>: the PDF sent to ELAN Chat&#39;s OCR agent no longer comes with instructions of its own: the agent works with its own, and the message only names the request. The document&#39;s language is read from the agent&#39;s reply.</li></ul></div>
+          </details>
+        </li>
+        <li class="row" id="swornfinder">
+          <img class="tool-icon" src="icons/swornfinder.png" width="56" height="56" alt="">
+          <div class="row__text">
+            <h3><a href="tools/swornfinder.html">SwornFinder</a></h3>
+            <p>Find sworn translators and interpreters in Belgium, France, Germany and Poland.</p>
+            <p class="row__meta"><span class="fig">v2.6.0</span><span>Updated 18 November 2026</span></p>
+          </div>
+          <div class="row__actions">
+          <a class="btn btn--ink" href="https://github.com/elanlanguages/Public-Releases/releases/download/swornfinder-latest/SwornFinder-Setup-2.6.0.exe"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg> Download <span class="fig btn__size">57 MB</span></a>
+          <button class="btn btn--card" type="button" data-copy="download.html?app=swornfinder"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Copy link</button>
+          </div>
+          <details class="row__notes">
+            <summary>What’s new in 2.6.0</summary>
+            <div class="notes"><ul><li>New country: Poland (list of sworn translators of the Ministry of Justice, lista tłumaczy przysięgłych). It covers about 10,000 people and 57 languages, each combined with Polish both ways, for translation and interpreting, with the e-mail addresses (≈ 49%) and phones published by the list, a voivodeship filter and the TP number.</li><li>For each person, the date each language was granted, the TP number and the academic title appear in the tooltip and the export.</li><li>Better civility guess for Polish first names.</li></ul></div>
+          </details>
+        </li>
+      </ul>
+    </section>
 
-    document.addEventListener("click", async (e) => {
-      const btn = e.target.closest("[data-copy]");
-      if (!btn) return;
-      try {
-        await navigator.clipboard.writeText(btn.dataset.copy);
-        showToast("Download link copied — it always points to the latest version");
-      } catch {
-        prompt("Copy this link:", btn.dataset.copy);
-      }
-    });
-
-    function renderExtensions(releases) {
-      document.getElementById("extensions").replaceChildren(...EXTENSIONS.map((ext) => extensionCard(ext, releases)));
-    }
-    renderExtensions(null);
-
-    (async () => {
-      const container = document.getElementById("apps");
-      try {
-        const releases = await fetchReleases();
-        renderExtensions(releases);
-        container.innerHTML = "";
-        for (const app of APPS) {
-          const info = resolveApp(app, releases);
-          if (info) container.appendChild(card(app, info));
-        }
-        if (!container.children.length) throw new Error("no installers found");
-        if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView({ block: "center" });
-      } catch {
-        container.innerHTML = `<p class="error">The application list could not be loaded right now.
-          <a class="notes-link" href="https://github.com/${REPO}/releases">See downloads on GitHub</a>.</p>`;
-      }
-    })();
-  </script>
+    <section class="block container shot" aria-labelledby="shot-head">
+      <div class="block__head">
+        <h2 id="shot-head">SwornFinder, as it opens</h2>
+        <p>Find sworn translators and interpreters in Belgium, France, Germany and Poland. <a href="tools/swornfinder.html">More about SwornFinder</a></p>
+      </div>
+      <figure class="shot__frame" data-kind="product">
+        <img src="screens/swornfinder.png" width="1917" height="940" alt="SwornFinder start screen" loading="lazy">
+      </figure>
+    </section>
+  </main>
+  <footer class="foot">
+    <div class="container foot__inner">
+      <p class="foot__mark">ELAN Languages</p>
+      <p>Every download comes from the <a href="https://github.com/elanlanguages/Public-Releases/releases">ELAN releases on GitHub</a>.</p>
+    </div>
+  </footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="site.js"></script>
 </body>
 </html>
