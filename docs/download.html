@@ -6,12 +6,15 @@
   <meta name="robots" content="noindex">
   <title>Downloading…</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='white'/><path d='M7 9h18M7 16h18M7 23h18' stroke='%2300a2e1' stroke-width='4' stroke-linecap='round'/></svg>">
-  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="tokens.css">
-  <link rel="stylesheet" href="base.css">
   <style>
-    body { display: grid; place-items: center; min-height: 100vh; padding: var(--space-md); text-align: center; background-color: var(--color-desk); }
-    a { text-decoration-color: var(--color-accent-2); }
+    :root { --bg: #f6f7f9; --text: #111827; --accent: #2563eb; --font: system-ui, -apple-system, "Segoe UI", sans-serif; }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #0f1115; --text: #f3f4f6; --accent: #3b82f6; }
+    }
+    body { font-family: var(--font); background: var(--bg); color: var(--text);
+           display: grid; place-items: center; min-height: 100vh; margin: 0; padding: 16px; text-align: center; }
+    a { color: var(--accent); }
+    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   </style>
 </head>
 <body>

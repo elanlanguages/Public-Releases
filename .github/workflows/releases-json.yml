@@ -1,5 +1,5 @@
-# Writes docs/releases.json and rebuilds the site's pages from it (site/build.mjs),
-# so visits never call the GitHub API (60 requests/hour per IP).
+# Writes docs/releases.json so the site reads releases from GitHub Pages
+# instead of calling the GitHub API on every visit (60 requests/hour per IP).
 name: Update releases.json
 
 on:
@@ -7,9 +7,6 @@ on:
     types: [published, edited, deleted]
   schedule:
     - cron: "17 * * * *" # asset uploads to the -latest channels fire no release event
-  push:
-    branches: [main]
-    paths: [docs/apps.js, site/**]
   workflow_dispatch:
 
 permissions:
@@ -32,13 +29,11 @@ jobs:
             tag_name, published_at, body, html_url,
             assets: [.assets[] | {name, size, browser_download_url, updated_at}]
           }]' > docs/releases.json
-      - name: Build pages
-        run: node site/build.mjs
       - name: Commit if changed
         run: |
-          git add -A docs
-          git diff --cached --quiet && exit 0
+          git diff --quiet docs/releases.json && exit 0
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "Update releases and pages"
+          git add docs/releases.json
+          git commit -m "Update releases.json"
           git push
