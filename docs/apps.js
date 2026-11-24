@@ -28,7 +28,7 @@ const APPS = [
     id: "swornfinder",
     icon: "icons/swornfinder.png",
     name: "SwornFinder",
-    description: "Find sworn translators and interpreters in Belgium, France and Germany.",
+    description: "Find sworn translators and interpreters.",
     channel: "swornfinder-latest",
     notesTag: (v) => `swornfinder-v${v}`,
     color: "#9333ea",

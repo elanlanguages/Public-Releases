@@ -112,7 +112,7 @@
   </div>
   <div class="toast" id="toast">Link copied</div>
 
-  <script src="apps.js?v=6"></script>
+  <script src="apps.js?v=7"></script>
   <script>
     const ICON_DOWNLOAD = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>';
     const ICON_LINK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>';
@@ -190,17 +190,19 @@
 
     function extensionCard(ext, releases) {
       const stores = storeLinks(ext, releases);
+      // Version of the newest .xpi published here, when there is one (store-only extensions have none).
+      const version = releases && ext.stores.map((s) => s.channel && resolveApp({ channel: s.channel, ext: "xpi" }, releases)?.version).find(Boolean);
       const el = newCard(ext);
       el.innerHTML = `
         <div class="top">
           ${logo(ext)}
           <div>
-            <h2>${escapeHtml(ext.name)}</h2>
+            <h2>${escapeHtml(ext.name)}${version ? `<span class="version">v${version}</span>` : ""}</h2>
           </div>
         </div>
         <p class="desc">${escapeHtml(ext.description)}</p>
         <div class="actions">
-          ${stores.map((s, i) => `<a class="btn ${i ? "btn-ghost" : "btn-primary"}" href="${s.url}">${ICON_DOWNLOAD} Add to ${escapeHtml(s.label)}</a>`).join("")}
+          ${stores.map((s) => `<a class="btn btn-primary" href="${s.url}">${ICON_DOWNLOAD} Add to ${escapeHtml(s.label)}</a>`).join("")}
         </div>`;
       return el;
     }
