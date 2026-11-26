@@ -1,0 +1,28 @@
+[
+ {
+  "mode": "redesign",
+  "depth": "full",
+  "scope": "site",
+  "shape": "Index-First",
+  "theme": "coral",
+  "axes": "light/grotesk-sans/warm",
+  "hero": "Desk",
+  "nav": "edge-aligned",
+  "footer": "board",
+  "imagery": "screenshots 1",
+  "photos": [],
+  "entry": "index cards",
+  "fingerprint": "coral-desk-index-cards",
+  "sections": [
+   "desk",
+   "extensions",
+   "apps",
+   "screenshot",
+   "footer"
+  ],
+  "signature": "every tool as a letterpress index card on the desk",
+  "waived": [],
+  "prompt": "ELAN tools download catalogue",
+  "date": "2026-11-20"
+ }
+]
